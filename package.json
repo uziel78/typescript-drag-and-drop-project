@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/uziel78/typescript-drag-and-drop-project#readme",
   "devDependencies": {
-    "lite-server": "^2.6.1"
+    "typescript": "^5.0.2"
   }
 }
