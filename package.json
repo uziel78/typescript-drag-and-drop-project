@@ -1,0 +1,23 @@
+{
+  "name": "typescript-drag-and-drop-project",
+  "version": "1.0.0",
+  "description": "A typescript based drag and drop project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uziel78/typescript-drag-and-drop-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uziel78/typescript-drag-and-drop-project/issues"
+  },
+  "homepage": "https://github.com/uziel78/typescript-drag-and-drop-project#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
