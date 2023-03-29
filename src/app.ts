@@ -1,11 +1,29 @@
 // =================== ACCESSING ELEMENTS / RENDERING FORM ===================== //
 // ============================================================================= //
 
+// ========== Project Type ========== //
+
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus
+  ) {}
+}
+
 // ========== Project State Management ========== //
 
+type Listener = (items: Project[]) => void;
+
 class ProjectState {
-  private listeners: any[] = [];
-  private projects: any[] = [];
+  private listeners: Listener[] = [];
+  private projects: Project[] = [];
   private static instance: ProjectState;
 
   private constructor() {}
@@ -18,18 +36,18 @@ class ProjectState {
     return this.instance;
   }
 
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      // might theoretically generate same number multiple times...
-      id: Math.random().toString(),
-      title: title,
-      description: description,
-      people: numOfPeople,
-    };
+    const newProject = new Project(
+      Math.random().toString(),
+      title,
+      description,
+      numOfPeople,
+      ProjectStatus.Active
+    );
     this.projects.push(newProject);
     for (const listernerFn of this.listeners) {
       // create copy of array
@@ -108,7 +126,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
 
   constructor(private type: 'active' | 'finished') {
     this.templateElement = document.getElementById(
@@ -125,7 +143,7 @@ class ProjectList {
     this.element.id = `${this.type}-projects`;
 
     // reach out to project state manager  and add listener function
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
