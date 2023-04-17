@@ -11,9 +11,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name][contenthash].js',
     //publicPath: '/dist/',
-    //clean: true,
+    clean: true,
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -25,14 +25,27 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presents: ['@babel/presets-env'],
+          },
+        },
+      },
     ],
   },
   devServer: {
-    static: [
-      {
-        directory: path.join(__dirname),
-      },
-    ],
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.ts', '.js'],
